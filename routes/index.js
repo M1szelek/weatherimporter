@@ -5,7 +5,8 @@ var MongoClient = require('mongodb').MongoClient;
 const Snapshot = require('../models').Snapshot;
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, response, next) {
+    console.log('meh');
     Snapshot.findOne({
         attributes: ['time'],
         order: [['time', 'DESC']]
@@ -28,20 +29,24 @@ router.get('/', function(req, res, next) {
                     Snapshot
                         .bulkCreate(snapshots)
                         .then(() => {
-                            console.log("Weather saved.")
+                            console.log("Weather saved.");
+                            response.send("Weather saved.");
                         })
                         .catch(() => {
                             console.log("Something went wrong. Weather not saved.")
+                            response.send("Something went wrong. Weather not saved.");
                         });
                 });
 
             })
             .catch(function (err) {
                 console.log(err);
+                response.send("Mongo problems.");
             });
     }).catch((e) => {
         console.log('Error during fetching fromTime');
         console.log(e);
+        response.send("Error during fetching fromTime");
     });
 });
 
