@@ -6,7 +6,6 @@ const Snapshot = require('../models').Snapshot;
 
 /* GET home page. */
 router.get('/', function (req, response, next) {
-    console.log('meh');
     Snapshot.findOne({
         attributes: ['time'],
         order: [['time', 'DESC']]
